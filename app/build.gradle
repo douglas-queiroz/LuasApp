@@ -39,6 +39,9 @@ dependencies {
     implementation "com.android.support:design:$android_support_version"
     implementation "com.android.support.constraint:constraint-layout:$constraint_layout_version"
 
+    // Android Arch
+    implementation "android.arch.lifecycle:extensions:$arch_core_version"
+
     // Rx Java && Android
     implementation "io.reactivex.rxjava2:rxandroid:$rx_android_version"
     implementation "io.reactivex.rxjava2:rxjava:$rx_java_version"
@@ -57,6 +60,7 @@ dependencies {
     // Tests
     testImplementation "junit:junit:$junit_version"
     testImplementation "org.mockito:mockito-core:$mockito_version"
+    testImplementation "android.arch.core:core-testing:$arch_core_version"
     androidTestImplementation "com.android.support.test:runner:$runner_version"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$espressor_version"
 }
