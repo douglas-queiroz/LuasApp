@@ -65,7 +65,7 @@ class StopForecastViewModel(logHelper: LogHelper,
         val hour = timeHelper.getCurrentHour()
         val min = timeHelper.getCurrentMin()
 
-        return if (hour < 12 || (hour == 12 && min <=1)) {
+        return if (hour < 12 || (hour == 12 && min == 0)) {
 
             STOP_STILLORGAN
 
