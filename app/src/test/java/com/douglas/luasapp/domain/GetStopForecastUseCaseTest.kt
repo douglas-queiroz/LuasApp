@@ -2,9 +2,9 @@ package com.douglas.luasapp.domain
 
 import com.douglas.luasapp.domain.exception.InvalidParamException
 import com.douglas.luasapp.domain.exception.NoInternetConnectionException
-import com.douglas.luasapp.domain.helper.InternetConnectionHelper
-import com.douglas.luasapp.domain.helper.InternetConnectionHelper.Companion.INTERNET_STATUS_NO_CONNECTION
-import com.douglas.luasapp.domain.helper.InternetConnectionHelper.Companion.INTERNET_STATUS_OK
+import com.douglas.luasapp.helper.InternetConnectionHelper
+import com.douglas.luasapp.helper.InternetConnectionHelper.Companion.INTERNET_STATUS_NO_CONNECTION
+import com.douglas.luasapp.helper.InternetConnectionHelper.Companion.INTERNET_STATUS_OK
 import com.douglas.luasapp.service.StopInfoService
 import com.douglas.luasapp.service.model.DirectionResponse
 import com.douglas.luasapp.service.model.StopInfoResponse
