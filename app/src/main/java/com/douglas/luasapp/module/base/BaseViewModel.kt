@@ -10,8 +10,8 @@ import io.reactivex.disposables.CompositeDisposable
 abstract class BaseViewModel(private val logHelper: LogHelper): ViewModel(), LifecycleObserver {
 
     protected val subscriptions = CompositeDisposable()
-    protected val loadingStatus = MutableLiveData<Boolean>()
-    protected val showErrorMessage = MutableLiveData<Int>()
+    val loadingStatus = MutableLiveData<Boolean>()
+    val showErrorMessage = MutableLiveData<Int>()
 
     override fun onCleared() {
         super.onCleared()
@@ -23,7 +23,7 @@ abstract class BaseViewModel(private val logHelper: LogHelper): ViewModel(), Lif
 
         loadingStatus.value = false
 
-        showErrorMessage.value = R.string.error_no_internet_connection
+        showErrorMessage.value = R.string.error_default
 
         logHelper.logError(error)
 
