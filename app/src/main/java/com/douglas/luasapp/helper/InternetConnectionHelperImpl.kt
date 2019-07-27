@@ -1,9 +1,9 @@
-package com.douglas.luasapp.domain.helper
+package com.douglas.luasapp.helper
 
 import android.content.Context
 import android.net.ConnectivityManager
-import com.douglas.luasapp.domain.helper.InternetConnectionHelper.Companion.INTERNET_STATUS_NO_CONNECTION
-import com.douglas.luasapp.domain.helper.InternetConnectionHelper.Companion.INTERNET_STATUS_OK
+import com.douglas.luasapp.helper.InternetConnectionHelper.Companion.INTERNET_STATUS_NO_CONNECTION
+import com.douglas.luasapp.helper.InternetConnectionHelper.Companion.INTERNET_STATUS_OK
 
 class InternetConnectionHelperImpl(private val context: Context): InternetConnectionHelper {
 

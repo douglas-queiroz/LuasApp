@@ -1,4 +1,4 @@
-package com.douglas.luasapp.domain.helper
+package com.douglas.luasapp.helper
 
 interface InternetConnectionHelper {
 
