@@ -69,7 +69,7 @@ class StopForecastViewModelTest {
 
         loadingStatusStore = target.loadingStatus.testObserver()
         showMessageStatusStore = target.showErrorMessage.testObserver()
-        stopForecastsStore = target.stopForecasts.testObserver()
+        stopForecastsStore = target.stopForecastsLiveData.testObserver()
     }
 
     @Test

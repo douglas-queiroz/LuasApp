@@ -4,4 +4,11 @@
     <!--Errors-->
     <string name="error_no_internet_connection">Please, check your internet connection!</string>
     <string name="error_default">Sorry, something wrong happened!</string>
+
+    <!--Stop Forecast Activity-->
+    <string name="stop_forecast_activity_refresh_button">Refresh</string>
+
+    <!--Item Stop Forecast-->
+    <string name="item_stop_forecast_due">Due Mins: %1$s</string>
+    <string name="item_stop_forecast_direction">Direction: %1$s</string>
 </resources>

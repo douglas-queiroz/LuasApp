@@ -4,6 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 import com.douglas.luasapp.R
 import com.douglas.luasapp.domain.GetStopForecastUseCase
 import com.douglas.luasapp.domain.exception.NoInternetConnectionException
+import com.douglas.luasapp.domain.model.Stop
 import com.douglas.luasapp.domain.model.StopForecast
 import com.douglas.luasapp.helper.LogHelper
 import com.douglas.luasapp.helper.TimeHelper
@@ -20,7 +21,8 @@ class StopForecastViewModel(logHelper: LogHelper,
         const val STOP_STILLORGAN = "sti"
     }
 
-    val stopForecasts = MutableLiveData<List<StopForecast>>()
+    val stopForecastsLiveData = MutableLiveData<List<StopForecast>>()
+    val stopLiveData = MutableLiveData<Stop>()
 
     fun loadStopForecasts() {
 
@@ -41,7 +43,7 @@ class StopForecastViewModel(logHelper: LogHelper,
 
         loadingStatus.value = false
 
-        stopForecasts.value = forecasts
+        stopForecastsLiveData.value = forecasts
     }
 
     private fun onLoadError(error: Throwable) {
