@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">LuasApp</string>
+
+    <!--Button-->
+    <string name="button_ok">OK</string>
+
+    <!--Loading-->
+    <string name="loading_text">Wait a moment, Loading!</string>
+
+    <!--Errors-->
+    <string name="error_no_internet_connection">Please, check your internet connection!</string>
+    <string name="error_default_title">Error</string>
+    <string name="error_default">Sorry, something wrong happened!</string>
+
+    <!--StopInfo Forecast Activity-->
+    <string name="stop_forecast_activity_refresh_button">Refresh</string>
+
+    <!--Item StopInfo Forecast-->
+    <string name="item_stop_forecast_due">Due: %1$s mins</string>
+    <string name="item_stop_forecast_direction">Direction: %1$s</string>
+</resources>
