@@ -4,17 +4,19 @@ import android.arch.lifecycle.MutableLiveData
 import com.douglas.luasapp.R
 import com.douglas.luasapp.domain.GetStopForecastUseCase
 import com.douglas.luasapp.domain.exception.NoInternetConnectionException
-import com.douglas.luasapp.domain.model.Stop
+import com.douglas.luasapp.domain.model.StopInfo
 import com.douglas.luasapp.domain.model.StopForecast
 import com.douglas.luasapp.helper.LogHelper
 import com.douglas.luasapp.helper.TimeHelper
 import com.douglas.luasapp.module.base.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class StopForecastViewModel(logHelper: LogHelper,
-                            private val timeHelper: TimeHelper,
-                            private val getStopForecastUseCase: GetStopForecastUseCase): BaseViewModel(logHelper) {
+class StopForecastViewModel @Inject constructor(logHelper: LogHelper,
+                                                private val timeHelper: TimeHelper,
+                                                private val getStopForecastUseCase:
+                                                GetStopForecastUseCase): BaseViewModel(logHelper) {
 
     companion object {
         const val STOP_MARLBOROUGH = "mar"
@@ -22,7 +24,7 @@ class StopForecastViewModel(logHelper: LogHelper,
     }
 
     val stopForecastsLiveData = MutableLiveData<List<StopForecast>>()
-    val stopLiveData = MutableLiveData<Stop>()
+    val stopLiveData = MutableLiveData<StopInfo>()
 
     fun loadStopForecasts() {
 
@@ -39,11 +41,13 @@ class StopForecastViewModel(logHelper: LogHelper,
 
     }
 
-    private fun onLoadSuccess(forecasts: List<StopForecast>) {
+    private fun onLoadSuccess(stop: StopInfo) {
 
         loadingStatus.value = false
 
-        stopForecastsLiveData.value = forecasts
+        stopForecastsLiveData.value = stop.stopForecasts
+
+        stopLiveData.value = stop
     }
 
     private fun onLoadError(error: Throwable) {

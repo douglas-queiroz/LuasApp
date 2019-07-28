@@ -17,7 +17,7 @@ import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import java.util.*
 
-class GetStopForecastUseCaseTest {
+class GetStopInfoForecastUseCaseTest {
 
     @Mock
     lateinit var internetConnectionHelper: InternetConnectionHelper
