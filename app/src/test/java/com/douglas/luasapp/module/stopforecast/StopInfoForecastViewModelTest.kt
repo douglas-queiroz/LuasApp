@@ -7,7 +7,7 @@ import com.douglas.luasapp.TestObserver
 import com.douglas.luasapp.domain.GetStopForecastUseCase
 import com.douglas.luasapp.domain.exception.InvalidParamException
 import com.douglas.luasapp.domain.exception.NoInternetConnectionException
-import com.douglas.luasapp.domain.model.Stop
+import com.douglas.luasapp.domain.model.StopInfo
 import com.douglas.luasapp.domain.model.StopForecast
 import com.douglas.luasapp.helper.LogHelper
 import com.douglas.luasapp.helper.TimeHelper
@@ -23,7 +23,7 @@ import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 
-class StopForecastViewModelTest {
+class StopInfoForecastViewModelTest {
 
     @get:Rule
     val taskExecutorRule = InstantTaskExecutorRule()
@@ -40,25 +40,24 @@ class StopForecastViewModelTest {
     @Mock
     lateinit var getStopForecastUseCase: GetStopForecastUseCase
 
-    private val stop = Stop(
-        "name",
-        "message"
-    )
-
     private val forecast = StopForecast (
-        stop,
         "direction",
         "due",
         "destination"
     )
 
-    private val listForecast = listOf(forecast)
+    private val stop = StopInfo(
+        "name",
+        "message",
+        listOf(forecast)
+    )
 
     private lateinit var target: StopForecastViewModel
 
     private lateinit var loadingStatusStore: TestObserver<Boolean>
     private lateinit var showMessageStatusStore: TestObserver<Int>
     private lateinit var stopForecastsStore: TestObserver<List<StopForecast>>
+    private lateinit var stopInfoStore: TestObserver<StopInfo>
 
     @Before
     fun setUp() {
@@ -70,6 +69,7 @@ class StopForecastViewModelTest {
         loadingStatusStore = target.loadingStatus.testObserver()
         showMessageStatusStore = target.showErrorMessage.testObserver()
         stopForecastsStore = target.stopForecastsLiveData.testObserver()
+        stopInfoStore = target.stopLiveData.testObserver()
     }
 
     @Test
@@ -78,14 +78,15 @@ class StopForecastViewModelTest {
         `when`(timeHelper.getCurrentHour()).thenReturn(10)
         `when`(timeHelper.getCurrentMin()).thenReturn(30)
         `when`(getStopForecastUseCase.getStopForecast(STOP_STILLORGAN))
-            .thenReturn(Observable.just(listForecast))
+            .thenReturn(Observable.just(stop))
 
         target.loadStopForecasts()
 
         assertEquals(true, loadingStatusStore.observedValues[0])
         assertEquals(false, loadingStatusStore.observedValues[1])
         assertEquals(0, showMessageStatusStore.observedValues.count())
-        assertEquals(listForecast, stopForecastsStore.observedValues[0])
+        assertEquals(stop.stopForecasts, stopForecastsStore.observedValues[0])
+        assertEquals(stop, stopInfoStore.observedValues[0])
     }
 
     @Test
@@ -94,14 +95,15 @@ class StopForecastViewModelTest {
         `when`(timeHelper.getCurrentHour()).thenReturn(12)
         `when`(timeHelper.getCurrentMin()).thenReturn(0)
         `when`(getStopForecastUseCase.getStopForecast(STOP_STILLORGAN))
-            .thenReturn(Observable.just(listForecast))
+            .thenReturn(Observable.just(stop))
 
         target.loadStopForecasts()
 
         assertEquals(true, loadingStatusStore.observedValues[0])
         assertEquals(false, loadingStatusStore.observedValues[1])
         assertEquals(0, showMessageStatusStore.observedValues.count())
-        assertEquals(listForecast, stopForecastsStore.observedValues[0])
+        assertEquals(stop.stopForecasts, stopForecastsStore.observedValues[0])
+        assertEquals(stop, stopInfoStore.observedValues[0])
     }
 
     @Test
@@ -110,14 +112,15 @@ class StopForecastViewModelTest {
         `when`(timeHelper.getCurrentHour()).thenReturn(12)
         `when`(timeHelper.getCurrentMin()).thenReturn(1)
         `when`(getStopForecastUseCase.getStopForecast(STOP_MARLBOROUGH))
-            .thenReturn(Observable.just(listForecast))
+            .thenReturn(Observable.just(stop))
 
         target.loadStopForecasts()
 
         assertEquals(true, loadingStatusStore.observedValues[0])
         assertEquals(false, loadingStatusStore.observedValues[1])
         assertEquals(0, showMessageStatusStore.observedValues.count())
-        assertEquals(listForecast, stopForecastsStore.observedValues[0])
+        assertEquals(stop.stopForecasts, stopForecastsStore.observedValues[0])
+        assertEquals(stop, stopInfoStore.observedValues[0])
     }
 
     @Test
