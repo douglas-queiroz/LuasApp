@@ -2,10 +2,10 @@ package com.douglas.luasapp.domain
 
 import com.douglas.luasapp.domain.exception.InvalidParamException
 import com.douglas.luasapp.domain.exception.NoInternetConnectionException
+import com.douglas.luasapp.domain.model.StopForecast
+import com.douglas.luasapp.domain.model.StopInfo
 import com.douglas.luasapp.helper.InternetConnectionHelper
 import com.douglas.luasapp.helper.InternetConnectionHelper.Companion.INTERNET_STATUS_NO_CONNECTION
-import com.douglas.luasapp.domain.model.Stop
-import com.douglas.luasapp.domain.model.StopForecast
 import com.douglas.luasapp.service.StopInfoService
 import com.douglas.luasapp.service.model.StopInfoResponse
 import io.reactivex.Completable
@@ -14,7 +14,7 @@ import io.reactivex.Observable
 class GetStopForecastUseCaseImpl(private val internetConnectionHelper: InternetConnectionHelper,
                                  private val stopInfoService: StopInfoService): GetStopForecastUseCase {
 
-    override fun getStopForecast(stop: String): Observable<List<StopForecast>> {
+    override fun getStopForecast(stop: String): Observable<StopInfo> {
 
         return validateParams(stop)
             .andThen(checkPreRequirements())
@@ -55,16 +55,11 @@ class GetStopForecastUseCaseImpl(private val internetConnectionHelper: InternetC
 
     }
 
-    private fun generateStopForecast(stopInfoResponse: StopInfoResponse): Observable<List<StopForecast>> {
+    private fun generateStopForecast(stopInfoResponse: StopInfoResponse): Observable<StopInfo> {
 
         return Observable.create { emitter ->
 
-            val result = arrayListOf<StopForecast>()
-
-            val stop = Stop(
-                stopInfoResponse.stop,
-                stopInfoResponse.message
-            )
+            val forecasts = arrayListOf<StopForecast>()
 
             stopInfoResponse.direction?.forEach { direction ->
 
@@ -72,18 +67,26 @@ class GetStopForecastUseCaseImpl(private val internetConnectionHelper: InternetC
 
                 direction.tram?.forEach { tram ->
 
-                    val forecast = StopForecast(
-                        stop,
-                        directionName,
-                        tram.dueMins,
-                        tram.destination
-                    )
+                    if (!tram.dueMins.isNullOrEmpty()) {
 
-                    result.add(forecast)
+                        val forecast = StopForecast(
+                            directionName,
+                            tram.dueMins,
+                            tram.destination
+                        )
+
+                        forecasts.add(forecast)
+                    }
                 }
             }
 
-            emitter.onNext(result)
+            val stop = StopInfo(
+                stopInfoResponse.stop,
+                stopInfoResponse.message,
+                forecasts
+            )
+
+            emitter.onNext(stop)
             emitter.onComplete()
         }
     }
